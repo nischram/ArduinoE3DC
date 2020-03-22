@@ -1,6 +1,6 @@
 # ArduinoE3DC
 Verbindung eines S10 Hauskraftwerk von E3DC mit einem Arduino (ESP) per Modbus  
-Stand: V0.01 15.03.2020
+Stand: V0.02 22.03.2020
 
 Diese Software ermöglicht die Datenabfrage eines S10 Hauskraftwerk von E3DC mit z.B. einem ESP8266 oder ESP32 per Modbus.
 
@@ -46,6 +46,13 @@ Bitte erstelle für deine Wünsche und Anregungen einen Issue.
 Auch Fehler bitte als Issue eintragen.  
 Gerne auf Deutsch, auch wenn Programmierer viel in Englisch schreiben.
 
-#### Changelog
+### License
+The code in this repo is licensed under the BSD New License. See LICENSE.txt for more info.  
+
+### Changelog
 V0.01 15.03.2020 Repository neu angelegt
 - Software neu erstellt und hochgeladen
+
+V0.02 22.03.2020 Lizenz ergänzt + Issue #1
+- LICENSE.txt
+- Anpassung für [Issue #1](https://github.com/nischram/ArduinoE3DC/issues/1)

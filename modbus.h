@@ -62,12 +62,11 @@ void initModbus(const char * ipAdress){
 void closeModbus(IPAddress ip){
     Serial.print("Modbus close     :  ");
     if (mb.disconnect(ip)) Serial.println("ready");
-    else Serial.println("failed!"); 
-
+    else Serial.println("failed!");
 }
 void firstReadMagicByte(IPAddress ip){
   char out[24];
-    while(magicbyte != 0xE3DC ) {  
+    while(magicbyte != 0xE3DC ) {
     mb.readHreg(ip, REG_MAGIC -1, &magicbyte);
     delay(40);
     mb.task();
@@ -83,7 +82,6 @@ void mbReadInt16(IPAddress ip, const int REG, int *value){
     mb.task();
     delay(40);
     *value = reg1;
-    
 }
 void mbReadInt32(IPAddress ip, const int REG, int *positiv, int *negativ, int *value){
     uint16_t reg1        = 0;
@@ -100,7 +98,7 @@ void mbReadInt32(IPAddress ip, const int REG, int *positiv, int *negativ, int *v
       *positiv = reg2 * 65536 + reg1;
       *negativ = 0;
     } else {
-      *negativ = 4294967296 - reg2 * 65536 - reg1; 
+      *negativ = 4294967296 - reg2 * 65536 - reg1;
       *positiv = 0;
     }
     *value = *positiv - *negativ;

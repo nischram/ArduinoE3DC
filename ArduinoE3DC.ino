@@ -20,7 +20,6 @@
 #ifdef HM_USE
   #include "homematic.h"
 #endif
-
 void setup() {
   serialBegin();
   serialPrintSW();
@@ -87,5 +86,6 @@ void loop() {
     }
   #endif
 
+  mb.task();
   delay(100);
 }
