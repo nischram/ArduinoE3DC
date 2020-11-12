@@ -7,6 +7,8 @@ char zeit[100];
 
 long millisNTP = 0;
 
+int timeDiff = SOMMER_WINTER;
+
 void cTime(int TM, char * var){
   if(TM < 10)
     sprintf (var, "0%i", TM);
@@ -28,7 +30,7 @@ void makeClock(time_t tm, char *url, char *datum, char *zeit){
   sprintf (url, "%s:%s:%s__%s.%s.%s",HOUR,MIN,SEK,DAY,MON,YEAR);
 }
 void serialPrintClock(){
-    makeClock(time(nullptr), timeStamp, datum, zeit);
+    makeClock(time(nullptr) + timeDiff, timeStamp, datum, zeit);
     Serial.print("Datum            :  ");Serial.println(datum);
     Serial.print("Uhrzeit          :  ");Serial.println(zeit);
 }

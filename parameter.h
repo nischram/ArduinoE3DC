@@ -3,8 +3,10 @@
 
 //#######################################
 // Software Parameter
-#define SW_VERSION                  0.01
-#define SW_DATE                    "15.03.2020"
+#define SW_VERSION                  1.00
+#define SW_DATE                    "12.11.2020"
+
+//#define DEBUG                                             // Aktiv DEBUG
 
 //#######################################
 // ESP Parameter
@@ -40,6 +42,7 @@
 #define IP_E3DC                    "192.168.123.123"        // IP-Adresse vom E3DC
 #define INTERVALL_MODBUS            5                       // Abfrageintervall in Sekunden
 #define MODBUS_TIMEOUT              6                       // Sekunden
+//#define EXT_LM_USE                                          // Aktiv = externe Leistungsmesser sind verbaut
 
 #define REG_OFFSET                  -1
 #define REG_MAGIC                   40001                   // E3DC Modbus Register
@@ -49,6 +52,7 @@
 #define REG_GRID                    40074                   // E3DC Modbus Register
 #define REG_AUTARKIE                40082                   // E3DC Modbus Register
 #define REG_BATSOC                  40083                   // E3DC Modbus Register
+#define REG_EXT_LM                  40076                   // E3DC Modbus Register
 
 //#######################################
 // Homematic Parameter
@@ -67,11 +71,12 @@
 #define ISE_S10_AUTARKIE            3185                    // ISE_ID aus der HM
 #define ISE_S10_EIGEN               3186                    // ISE_ID aus der HM
 #define ISE_S10_BATSOC              1770                    // ISE_ID aus der HM
+#define ISE_S10_EXT_LM              3187                    // ISE_ID aus der HM
 
 //#######################################
 // W-LAN Parameter
 //#define OAT_USE                                           // Aktivieren wenn OAT genutzt werden soll, Librarie muss installiert werden
-#define OTA_HOSTNAME               "OTA-ModbusTest"         // Hostname für OverTheAir Update
+#define OTA_HOSTNAME               "OTA-ModbusE3DC"         // Hostname für OverTheAir Update
 
 //#######################################
 // NTP & Time Parameter
@@ -79,5 +84,6 @@
 #define NTP_SERVER_2               "pool.ntp.org"
 #define TIMEZONE                    1
 #define DST                         0
+#define SOMMER_WINTER               WINTER                  // Sommer- Winterzeit Einstellung Sommer=SOMMER Winter=WINTER
 
 #endif // __PARAMETER_H_

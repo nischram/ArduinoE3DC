@@ -1,6 +1,6 @@
 # ArduinoE3DC
 Verbindung eines S10 Hauskraftwerk von E3DC mit einem Arduino (ESP) per Modbus  
-Stand: V0.02 22.03.2020
+Stand: V1.00 12.11.2020
 
 Diese Software ermöglicht die Datenabfrage eines S10 Hauskraftwerk von E3DC mit z.B. einem ESP8266 oder ESP32 per Modbus.
 
@@ -32,10 +32,10 @@ Hier sind in der Arduino- und ESP-Welt wohl fast keine Grenzen gesetzt. Du musst
 - LED-Matrix  
 
 Um Andere Anwendungen zu ergänzen müssen die Variablen genommen werden die vom Modbus-Request gefüllt werden. Hier das Beispiel zur Batterie-Leistung:  
-`mbReadInt32(mbIP_E3DC, REG_BAT, &free1, &free2, &batPower);`  
-Die Variable "_batPower_" ist (int) und enthält sowohl positiv die Batterieladung sowie negativ die Entladung. Wenn du die Werte getrennt haben willst kannst du bei der Variable "_free1_" deine positive Variable (Charge) einsetzen und bei "_free2_" die für negative Werte (Discharge).
+`mbCalcInt32(&batPowerReg1, &batPowerReg2, &batPower);`  
+Die Variable "_batPower_" ist (int) und enthält sowohl positiv die Batterieladung sowie negativ die Entladung.  
 Werte die als "Int16" abgefragt werden, können mit dieser Zeile direkt eine Variable versorgen, hier der Batterie-Füllstand (SOC):  
-`mbReadInt16(mbIP_E3DC, REG_BATSOC, &batSoc);`
+`mbCalcInt16(&batSocReg, &batSoc);`
 
 ### OTA - Over the Air
 Dank AZ-Delivery habe ich auch die **Over the Air** update Funktion eingebaut.  
@@ -50,9 +50,14 @@ Gerne auf Deutsch, auch wenn Programmierer viel in Englisch schreiben.
 The code in this repo is licensed under the BSD New License. See LICENSE.txt for more info.  
 
 ### Changelog
-V0.01 15.03.2020 Repository neu angelegt
-- Software neu erstellt und hochgeladen
+V1.00 12.11.2020 Modbus überarbeitet + Issue #1
+- Komplette Anpassung der modbus.h für [Issue #1](https://github.com/nischram/ArduinoE3DC/issues/1)
+- Schalter für Sommer- Winetzeit eingebaut (ntp-Zeit war falsch)
 
 V0.02 22.03.2020 Lizenz ergänzt + Issue #1
 - LICENSE.txt
 - Anpassung für [Issue #1](https://github.com/nischram/ArduinoE3DC/issues/1)
+
+V0.01 15.03.2020 Repository neu angelegt
+- Software neu erstellt und hochgeladen
+

@@ -51,24 +51,33 @@ void loop() {
   if ((millis() - lastMbMillis > IntervalModbus * 1000) || lastMbMillis == 0) {
     lastMbMillis = millis();
     loopCounter++;
-    mbReadInt32(mbIP_E3DC, REG_GRID, &free1, &free2, &gridPower);
-    mbReadInt32(mbIP_E3DC, REG_BAT, &free1, &free2, &batPower);
-    mbReadInt32(mbIP_E3DC, REG_SOLAR, &free1, &free2, &solarPower);
-    mbReadInt32(mbIP_E3DC, REG_CON, &free1, &free2, &homePower);
-    mbReadInt16(mbIP_E3DC, REG_BATSOC, &batSoc);
-    mbReadAutarkieEigenv(mbIP_E3DC, REG_AUTARKIE, &autarkie, &eigenverbrauch);
+    mainTaskMbRead();
+    mbCalcInt32(&solarPowerReg1, &solarPowerReg2, &solarPower);
+    mbCalcInt32(&gridPowerReg1, &gridPowerReg2, &gridPower);
+    mbCalcInt32(&batPowerReg1, &batPowerReg2, &batPower);
+    mbCalcInt32(&homePowerReg1, &homePowerReg2, &homePower);
+    mbCalcInt16(&batSocReg, &batSoc);
+    mbCalcAutarkieEigenv(&autarkieReg, &autarkie, &eigenverbrauch);
+    #ifdef EXT_LM_USE
+      mbCalcInt32(&extPowerReg1, &extPowerReg2, &extPower);
+    #endif       
     Serial.println("______________________________ ");
     serialPrintClock();
-    Serial.print("Reboot counter   : ");Serial.printf("%6d\n",readRebootCounter());
-    Serial.print("Loop   counter   : ");Serial.printf("%6d\n",loopCounter);
-    Serial.print("WiFi strength    : ");Serial.printf("%6d dBm\n",WiFi.RSSI());
-    Serial.print("Power Solar      : ");Serial.printf("%6d W\n",solarPower);
-    Serial.print("Power Grid       : ");Serial.printf("%6d W\n",gridPower);
-    Serial.print("Power Batterie   : ");Serial.printf("%6d W\n",batPower);
-    Serial.print("Power Home       : ");Serial.printf("%6d W\n",homePower);
-    Serial.print("Batterie SOC     : ");Serial.printf("%6d %%\n",batSoc);
-    Serial.print("Autarkie         : ");Serial.printf("%6d %%\n",autarkie);
-    Serial.print("Eigenverbrauch   : ");Serial.printf("%6d %%\n",eigenverbrauch);
+    #ifdef DEBUG
+      Serial.printf("Reboot counter   : %6d\n",readRebootCounter());
+      Serial.printf("Loop   counter   : %6d\n",loopCounter);
+    #endif       
+    Serial.printf("WiFi strength    : %6d dBm\n",WiFi.RSSI());
+    Serial.printf("Power Solar      : %6d W\n",solarPower);
+    Serial.printf("Power Grid       : %6d W\n",gridPower);
+    Serial.printf("Power Batterie   : %6d W\n",batPower);
+    Serial.printf("Power Home       : %6d W\n",homePower);
+    #ifdef EXT_LM_USE
+      Serial.printf("Power Ext-LM     : %6d W\n",extPower);
+    #endif       
+    Serial.printf("Batterie SOC     : %6d %%\n",batSoc);
+    Serial.printf("Autarkie         : %6d %%\n",autarkie);
+    Serial.printf("Eigenverbrauch   : %6d %%\n",eigenverbrauch);
   }
 
   #ifdef HM_USE
@@ -80,6 +89,9 @@ void loop() {
       sendHM(NO_PRINT, ISE_S10_BAT, "S10_Bat", "%i", batPower);
       sendHM(NO_PRINT, ISE_S10_SOLAR, "S10_Solar", "%i", solarPower);
       sendHM(NO_PRINT, ISE_S10_CON, "S10_Home", "%i", homePower);
+      #ifdef EXT_LM_USE
+        sendHM(NO_PRINT, ISE_S10_EXT_LM, "EXT_LM", "%i", extPower);
+      #endif       
       sendHM(NO_PRINT, ISE_S10_BATSOC, "S10_SOC", "%i", batSoc);
       sendHM(NO_PRINT, ISE_S10_AUTARKIE, "S10_Autarkie", "%i", autarkie);
       sendHM(NO_PRINT, ISE_S10_EIGEN, "S10_Eigenverbrauch", "%i", eigenverbrauch);
