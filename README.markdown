@@ -1,4 +1,12 @@
 # ArduinoE3DC
+
+## Wichtige Information!!!
+Dieser Repository wird nicht weitergeführt.  
+Bitte neue Repository beachten: [E3DC-Modbus-Display](https://github.com/nischram/EMD_1)  
+
+***
+***
+
 Verbindung eines S10 Hauskraftwerk von E3DC mit einem Arduino (ESP) per Modbus  
 Stand: V1.00 12.11.2020
 
